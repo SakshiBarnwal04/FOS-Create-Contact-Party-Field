@@ -32,9 +32,9 @@
 
         <div class="sidebar-search-box">
           <div class="sidebar-search-input-wrap">
-            <input type="text" placeholder="Quick Search" />
+            <input type="text" placeholder="Search Job #..." />
             <div class="shpt-tag">
-              <span>SHPT</span>
+              <span>JOB#</span>
               <span style="font-size: 9px; margin-left: 2px;">▾</span>
             </div>
             <div class="search-btn-box">
@@ -180,59 +180,38 @@
           </div>
 
           <div class="submenu">
-            <!-- Leads (Active item with cyan highlight) -->
-            <div class="submenu-item active">
-              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="8.5" cy="7" r="4"></circle>
-                <line x1="20" y1="8" x2="20" y2="14"></line>
-                <line x1="23" y1="11" x2="17" y2="11"></line>
+            <!-- Leads -->
+            <div class="submenu-item" id="subitemLeads" style="cursor: pointer;" title="Open Leads Module">
+              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
               <span>Leads</span>
             </div>
             <!-- Opportunities -->
-            <div class="submenu-item">
-              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="6"></circle>
-                <circle cx="12" cy="12" r="2"></circle>
+            <div class="submenu-item" id="subitemOpportunities" style="cursor: pointer;" title="Open Opportunities Module">
+              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
               <span>Opportunities</span>
             </div>
             <!-- Activities -->
-            <div class="submenu-item">
-              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            <div class="submenu-item" id="subitemActivities" style="cursor: pointer;" title="Open Activities Module">
+              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
               <span>Activities</span>
             </div>
-            <!-- Contacts -->
-            <div class="submenu-item">
-              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            <!-- Contacts (Active Highlighted - Image 1 Match) -->
+            <div class="submenu-item active" id="subitemContacts" style="cursor: pointer;" title="Open Contacts Module">
+              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
               <span>Contacts</span>
             </div>
-            <!-- Calendar -->
-            <div class="submenu-item">
-              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              <span>Calendar</span>
-            </div>
             <!-- Settings -->
-            <div class="submenu-item">
-              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path
-                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                </path>
+            <div class="submenu-item" id="subitemSettings" style="cursor: pointer;" title="Open Settings">
+              <svg class="sub-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
               <span>Settings</span>
             </div>
@@ -241,8 +220,8 @@
           <!-- Pricing -->
           <div class="menu-item">
             <div class="menu-item-left">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
               </svg>
               <span>Pricing</span>
             </div>
@@ -255,23 +234,36 @@
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                </path>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
               </svg>
               <span>Operations</span>
             </div>
             <span class="menu-arrow">▸</span>
           </div>
 
-          <!-- Report (Singular, expanded) -->
+          <!-- Accounts -->
           <div class="menu-item">
             <div class="menu-item-left">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
               </svg>
-              <span>Report</span>
+              <span>Accounts</span>
             </div>
-            <span class="menu-arrow" style="transform: rotate(90deg); display: inline-block;">▸</span>
+            <span class="menu-arrow">▸</span>
+          </div>
+
+          <!-- Reports -->
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              <span>Reports</span>
+            </div>
+            <span class="menu-arrow">▸</span>
           </div>
         </nav>
       </div>
@@ -318,11 +310,27 @@
     <!-- Main Content Area -->
     <main class="main-content">
 
-      <!-- Top Title Row: Leads + Action Buttons (Screenshot 1) -->
+      <!-- Top Title Row: Contacts, Opportunities, or Leads (Screenshot 1 Match) -->
       <header class="page-header-row">
-        <h1 class="page-title">Leads</h1>
+        <h1 class="page-title" id="pageTitle">Contacts</h1>
 
-        <div class="header-actions">
+        <!-- Contacts Header Actions (Default Active - Image 1 Match) -->
+        <div class="header-actions" id="contactsHeaderActions">
+          <button id="btnCreateContact" class="btn-create-contact" title="Create a new contact">
+            <span class="plus-icon">+</span>
+            <span>Create Contact</span>
+          </button>
+        </div>
+
+        <div class="header-actions" id="oppHeaderActions" style="display: none;">
+          <!-- Create Opportunity Button -->
+          <button id="btnCreateOpp" class="btn-create-opp" title="Create a new opportunity">
+            <span class="plus-icon">+</span>
+            <span>Create Opportunity</span>
+          </button>
+        </div>
+
+        <div class="header-actions" id="leadsHeaderActions" style="display: none;">
           <!-- Import Button with Permission Tooltip Wrapper -->
           <div class="import-btn-wrapper" id="importBtnWrapper">
             <button id="btnImport" class="btn-import" title="">
@@ -339,7 +347,7 @@
           </div>
 
           <!-- Create Lead Button -->
-          <button class="btn-create-lead" title="Create a single lead">
+          <button class="btn-create-lead" id="btnCreateLead" title="Create a single lead">
             <span style="font-size: 15px; font-weight: 700; line-height: 1;">+</span>
             <span>Create Lead</span>
           </button>
@@ -348,45 +356,175 @@
 
       <!-- Filter Controls Bar (Screenshot 1) -->
       <section class="filter-bar">
-        <div class="search-leads-box">
+        <div class="search-leads-box" id="searchBoxWrapper">
           <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
             stroke-width="2.5">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" placeholder="Search Leads" />
+          <input type="text" id="searchInput" placeholder="Search Contacts" />
         </div>
 
         <div class="filter-right-controls">
-          <button class="btn-filter-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-              </polygon>
-            </svg>
-            <span>Show Favorite</span>
-          </button>
-
-          <button class="btn-filter-pill">
+          <!-- Date Range Filter Pill (Screenshot 1) -->
+          <button class="btn-filter-pill" id="btnDateRange" title="Change Date Range">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
               <line x1="16" y1="2" x2="16" y2="6"></line>
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            <span>9/11/2026 - 9/12/2026</span>
+            <span id="dateRangeText">9/1/2026 - 9/30/2026</span>
             <span style="font-size: 11px; color: #6b7280; margin-left: 4px;">▾</span>
           </button>
+
+          <!-- Table View and Pipeline View Toggle Group (Hidden in Contacts View) -->
+          <div class="view-switcher-group" id="viewSwitcherGroup" style="display: none;">
+            <!-- Table View Toggle Icon -->
+            <button type="button" class="btn-view-toggle" id="btnViewTable" title="Switch to Table View">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <circle cx="3.5" cy="6" r="1" fill="currentColor"></circle>
+                <circle cx="3.5" cy="12" r="1" fill="currentColor"></circle>
+                <circle cx="3.5" cy="18" r="1" fill="currentColor"></circle>
+              </svg>
+            </button>
+            <!-- Pipeline View Toggle Icon (Active in Screenshot 1) -->
+            <button type="button" class="btn-view-toggle active" id="btnViewPipeline" title="Switch to Pipeline View">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="3" y="3" width="4" height="4" rx="0.8"></rect>
+                <rect x="10" y="3" width="4" height="4" rx="0.8"></rect>
+                <rect x="17" y="3" width="4" height="4" rx="0.8"></rect>
+                <rect x="3" y="10" width="4" height="4" rx="0.8"></rect>
+                <rect x="10" y="10" width="4" height="4" rx="0.8"></rect>
+                <rect x="17" y="10" width="4" height="4" rx="0.8"></rect>
+                <rect x="3" y="17" width="4" height="4" rx="0.8"></rect>
+                <rect x="10" y="17" width="4" height="4" rx="0.8"></rect>
+                <rect x="17" y="17" width="4" height="4" rx="0.8"></rect>
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
-      <!-- Leads Data Table View (Screenshot 1 Headers) -->
-      <section class="table-viewport">
+      <!-- ================================================================= -->
+      <!-- SCREEN 1: PIPELINE VIEW CONTAINER (Funnel Stage Columns & Cards) -->
+      <!-- ================================================================= -->
+      <section class="pipeline-viewport" id="pipelineView" style="display: none;">
+        <!-- Horizontal Scroll Left/Right Navigation Arrows (Requirement 3) -->
+        <button type="button" class="pipeline-scroll-arrow left" id="scrollArrowLeft" title="Scroll left" aria-label="Scroll left">&#8249;</button>
+        <button type="button" class="pipeline-scroll-arrow right" id="scrollArrowRight" title="Scroll right" aria-label="Scroll right">&#8250;</button>
+
+        <!-- Funnel Columns Horizontal Container -->
+        <div class="pipeline-scroll-container" id="pipelineScrollContainer">
+          <!-- Dynamic Stage Columns & Cards generated via app.js -->
+        </div>
+
+        <!-- Centralized Empty-State Container: No Active Opportunity Stages (Requirement 9) -->
+        <div class="no-active-stages-container" id="noActiveStagesContainer">
+          <div class="no-active-stages-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+          </div>
+          <div class="no-active-stages-heading">No Active Opportunity Stages.</div>
+          <div class="no-active-stages-desc">
+            No active Opportunity Stages are configured. Please contact your Admin or service@freightoscope.com for assistance.
+          </div>
+          <button type="button" class="no-active-stages-btn-ok" id="btnAcknowledgeNoStages">Ok</button>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SCREEN 2: OPPORTUNITIES TABLE VIEW (Data Table Listing) -->
+      <!-- ================================================================= -->
+      <section class="opp-table-container table-viewport" id="oppTableView">
         <table class="leads-table">
           <thead>
             <tr>
               <th style="width: 32px; text-align: center;">
-                <!-- 6 dots reorder icon -->
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#9ca3af">
+                  <path
+                    d="M9 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm10-14a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+                </svg>
+              </th>
+              <th style="width: 28px;"></th>
+              <th style="width: 28px;"></th>
+              <th>
+                <div class="th-content">
+                  <span>Opportunity Name</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Party Name</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Stage</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Trade Lane</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Expected Revenue</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Expected Profit</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Estimated Closure Date</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="oppTableBody">
+            <!-- Dynamic rows rendered via app.js -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- LEADS TABLE VIEW CONTAINER (Accessible when Leads clicked in nav) -->
+      <!-- ================================================================= -->
+      <section class="table-viewport" id="leadsTableView" style="display: none;">
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th style="width: 32px; text-align: center;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="#9ca3af">
                   <path
                     d="M9 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm10-14a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
@@ -458,27 +596,103 @@
         </table>
       </section>
 
-      <!-- Bottom blue line indicator above pagination -->
-      <div class="table-bottom-indicator"></div>
+      <!-- ================================================================= -->
+      <!-- CONTACTS TABLE VIEW CONTAINER (Default Active - Screenshot 1 Match) -->
+      <!-- ================================================================= -->
+      <section class="table-viewport contacts-table-viewport" id="contactsTableView" style="display: block;">
+        <table class="contacts-table leads-table">
+          <thead>
+            <tr>
+              <th style="width: 32px; text-align: center;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#9ca3af">
+                  <path
+                    d="M9 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm10-14a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+                </svg>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Contact Name</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Party</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Owner</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Email</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Phone No. (Primary)</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Created By</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+              <th>
+                <div class="th-content">
+                  <span>Created Date</span>
+                  <svg class="funnel-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                  </svg>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="contactsTableBody">
+            <!-- Dynamic rows rendered via app.js -->
+          </tbody>
+        </table>
 
-      <!-- Pagination Footer Bar -->
-      <footer class="pagination-bar">
-        <div class="page-size-selector">
-          <span>Showing</span>
-          <select>
-            <option>25</option>
-            <option>50</option>
-            <option>100</option>
-          </select>
-          <span>of <strong id="leadCountDisplay">9</strong> results</span>
+        <!-- Table Pagination Bar matching Image 1 -->
+        <div class="table-pagination-bar" id="contactsPaginationBar">
+          <div class="pagination-info">
+            <span>Showing</span>
+            <div class="pagination-select-wrap">
+              <select id="contactsPageSizeSelect" class="pagination-page-size-select">
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <span class="select-chevron">▾</span>
+            </div>
+            <span id="contactsResultsCount">of 4 results</span>
+          </div>
+          <div class="pagination-controls">
+            <button type="button" class="btn-pagination-nav" id="btnContactsPrev">&lsaquo; Prev</button>
+            <button type="button" class="btn-pagination-num active" id="btnContactsPage1">1</button>
+            <button type="button" class="btn-pagination-nav" id="btnContactsNext">Next &rsaquo;</button>
+          </div>
         </div>
-
-        <div class="pagination-nav">
-          <button class="pagination-btn">‹ Prev</button>
-          <button class="pagination-btn active">1</button>
-          <button class="pagination-btn">Next ›</button>
-        </div>
-      </footer>
+      </section>
 
       <!-- Bottom terms tag -->
       <div class="terms-footer">
@@ -881,10 +1095,10 @@
               </div>
             </div>
 
-            <!-- Row 2: Sales Opportunity -->
-            <div class="screen-row">
+            <!-- Row 2: Sales Opportunity (Controls Stage Drag-and-Drop Permission) -->
+            <div class="screen-row" id="rowSalesOpportunity">
               <div class="screen-row-left">
-                <span class="screen-check-box checked">
+                <span class="screen-check-box checked" id="boxScreenSalesOpp">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.5">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
@@ -906,12 +1120,14 @@
                     </svg></span>
                   <span>Delete</span>
                 </button>
-                <button type="button" class="btn-action-pill checked">
-                  <span class="pill-check-box"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
+                <!-- DEDICATED UPDATE/EDIT PERMISSION BUTTON (Controls Drag & Drop Stage Update) -->
+                <button type="button" class="btn-action-pill checked" id="btnPermOppUpdate"
+                  title="Toggle Stage Update/Movement Permission for Opportunities">
+                  <span class="pill-check-box" id="boxPermOppUpdate"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
                       stroke="#ffffff" stroke-width="3.5">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg></span>
-                  <span>Update</span>
+                  <span class="pill-text">Update</span>
                 </button>
                 <button type="button" class="btn-action-pill checked">
                   <span class="pill-check-box"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
@@ -976,8 +1192,8 @@
                 <span class="screen-row-text">Contact</span>
               </div>
               <div class="action-buttons-group">
-                <button type="button" class="btn-action-pill checked">
-                  <span class="pill-check-box"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
+                <button type="button" class="btn-action-pill checked" id="btnPermContactAdd" title="Toggle Contacts Add Permission">
+                  <span class="pill-check-box" id="boxPermContactAdd"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
                       stroke="#ffffff" stroke-width="3.5">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg></span>
@@ -1007,7 +1223,7 @@
               </div>
             </div>
 
-            <!-- Row 5: Leads (With the requested Import checkbox controlling bulk import permission) -->
+            <!-- Row 5: Leads (With Add controlling Leads Create permission AC-5.6 & Import controlling bulk import) -->
             <div class="screen-row" id="rowLeadsScreen">
               <div class="screen-row-left">
                 <span class="screen-check-box checked">
@@ -1018,8 +1234,8 @@
                 <span class="screen-row-text">Leads</span>
               </div>
               <div class="action-buttons-group">
-                <button type="button" class="btn-action-pill checked">
-                  <span class="pill-check-box"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
+                <button type="button" class="btn-action-pill checked" id="btnPermLeadAdd" title="Toggle Leads Add/Create Permission (AC-5.6)">
+                  <span class="pill-check-box" id="boxPermLeadAdd"><svg width="9" height="9" viewBox="0 0 24 24" fill="none"
                       stroke="#ffffff" stroke-width="3.5">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg></span>
@@ -1068,6 +1284,393 @@
     <div class="roles-modal-footer">
       <button type="button" class="btn-roles-cancel" id="btnCancelRolesModal">Cancel</button>
       <button type="button" class="btn-roles-save" id="btnSaveRolesModal">Save</button>
+    </div>
+  </div>
+
+  <!-- Opportunity Details Modal (Requirement 4 & 7: View Opportunity & Audit History) -->
+  <div id="oppDetailsBackdrop" class="roles-modal-backdrop" style="display: none;"></div>
+  <div id="oppDetailsModal" class="opp-details-modal" role="dialog" aria-labelledby="oppDetailsTitle" aria-modal="true">
+    <div class="opp-modal-header">
+      <div class="opp-modal-title" id="oppDetailsTitle">Opportunity Details</div>
+      <button type="button" class="opp-modal-close" id="btnCloseOppDetails" title="Close">&times;</button>
+    </div>
+    <div class="opp-modal-body">
+      <div class="opp-info-grid">
+        <div class="opp-info-item">
+          <span class="opp-info-label">Opportunity Name</span>
+          <span class="opp-info-value" id="detailOppName">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Current Stage</span>
+          <span class="opp-info-value" id="detailOppStage">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Party Name</span>
+          <span class="opp-info-value" id="detailPartyName">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Trade Lane</span>
+          <span class="opp-info-value" id="detailTradeLane">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Expected Revenue</span>
+          <span class="opp-info-value" id="detailExpRevenue">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Expected Profit</span>
+          <span class="opp-info-value" id="detailExpProfit" style="color: #12b76a;">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Estimated Closure Date</span>
+          <span class="opp-info-value" id="detailClosureDate">--</span>
+        </div>
+        <div class="opp-info-item">
+          <span class="opp-info-label">Opportunity ID</span>
+          <span class="opp-info-value" id="detailOppId">--</span>
+        </div>
+      </div>
+
+      <div class="opp-audit-title">Audit History</div>
+      <div class="opp-audit-log-list" id="oppAuditLogList">
+        <!-- Dynamic audit log entries -->
+      </div>
+    </div>
+    <div class="opp-modal-footer">
+      <button type="button" class="btn-opp-modal-close" id="btnFooterCloseOppDetails">Close</button>
+    </div>
+  </div>
+
+  <!-- Create Opportunity Modal Dialog -->
+  <div id="createOppModal" class="opp-details-modal" role="dialog" aria-modal="true" style="width: 520px;">
+    <div class="opp-modal-header">
+      <div class="opp-modal-title">Create Opportunity</div>
+      <button type="button" class="opp-modal-close" id="btnCloseCreateOpp">&times;</button>
+    </div>
+    <div class="opp-modal-body">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="roles-field-group">
+          <label class="roles-label" for="inputNewOppName">Opportunity Name <span class="required-star">*</span></label>
+          <input type="text" id="inputNewOppName" class="roles-input" placeholder="e.g. Hong Kong to Dubai Air Cargo" />
+        </div>
+        <div class="roles-field-group">
+          <label class="roles-label" for="inputNewPartyName">Party Name <span class="required-star">*</span></label>
+          <input type="text" id="inputNewPartyName" class="roles-input" placeholder="e.g. Acme Global Logistics, USA" />
+        </div>
+        <div class="roles-field-group">
+          <label class="roles-label" for="inputNewTradeLane">Trade Lane</label>
+          <input type="text" id="inputNewTradeLane" class="roles-input" placeholder="e.g. China - UAE" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="roles-field-group">
+            <label class="roles-label" for="inputNewExpRev">Expected Revenue ($)</label>
+            <input type="number" id="inputNewExpRev" class="roles-input" placeholder="500000" />
+          </div>
+          <div class="roles-field-group">
+            <label class="roles-label" for="inputNewExpProfit">Expected Profit ($)</label>
+            <input type="number" id="inputNewExpProfit" class="roles-input" placeholder="120000" />
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="roles-field-group">
+            <label class="roles-label" for="selectNewStage">Initial Stage</label>
+            <select id="selectNewStage" class="roles-input" style="background: #ffffff;">
+              <option value="new">New</option>
+              <option value="qualification">Qualification</option>
+              <option value="quotation_sent">Quotation Sent</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+            </select>
+          </div>
+          <div class="roles-field-group">
+            <label class="roles-label" for="inputNewClosure">Closure Date</label>
+            <input type="date" id="inputNewClosure" class="roles-input" value="2026-09-30" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="roles-modal-footer">
+      <button type="button" class="btn-roles-cancel" id="btnCancelCreateOpp">Cancel</button>
+      <button type="button" class="btn-roles-save" id="btnSubmitCreateOpp">Save Opportunity</button>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SIDE DRAWER: Add New Contact (Exact Match to Image 2)        -->
+  <!-- ========================================================= -->
+  <div id="contactDrawerBackdrop" class="drawer-backdrop"></div>
+
+  <aside id="contactDrawer" class="side-drawer contact-drawer" role="dialog" aria-modal="true" aria-labelledby="contactDrawerTitle">
+
+    <!-- Drawer Header -->
+    <header class="drawer-header">
+      <h2 id="contactDrawerTitle" class="drawer-title">Add New Contact</h2>
+      <button id="btnCloseContactDrawer" class="drawer-close-btn" title="Close Drawer" aria-label="Close">&times;</button>
+    </header>
+
+    <!-- Permission Error Banner (AC-5.6) -->
+    <div id="contactPermissionBanner" class="contact-error-banner" style="display: none;">
+      <div class="banner-icon-col">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#d92d20" stroke-width="2.3">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <div class="contact-error-banner-content">
+        <div class="contact-error-banner-title">Permission Denied</div>
+        <div class="contact-error-banner-desc" id="contactPermissionBannerText">
+          You do not have permission to create a new party/lead. Please contact your Admin or service@freightoscope.com for assistance.
+        </div>
+      </div>
+      <button type="button" class="btn-dismiss-banner" id="btnDismissPermBanner" title="Dismiss">&times;</button>
+    </div>
+
+    <!-- Duplicate Email Error Banner (AC-4.2) -->
+    <div id="contactDuplicateBanner" class="contact-error-banner warning" style="display: none;">
+      <div class="banner-icon-col">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b54708" stroke-width="2.3">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="contact-error-banner-content">
+        <div class="contact-error-banner-title">Validation Error</div>
+        <div class="contact-error-banner-desc" id="contactDuplicateBannerText">
+          Email already exists. The pending Lead has not been created. Please enter a unique email address.
+        </div>
+      </div>
+      <button type="button" class="btn-dismiss-banner" id="btnDismissDupBanner" title="Dismiss">&times;</button>
+    </div>
+
+    <!-- Drawer Body (Exact Field Matching Image 2) -->
+    <div class="drawer-body contact-drawer-body">
+      <!-- Row 1: First Name * & Last Name * -->
+      <div class="form-grid-row two-cols">
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactFirstName">First Name <span class="req-star">*</span></label>
+          <input type="text" id="contactFirstName" class="fos-form-input" placeholder="Enter First Name" />
+          <span class="fos-field-error" id="errContactFirstName"></span>
+        </div>
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactLastName">Last Name <span class="req-star">*</span></label>
+          <input type="text" id="contactLastName" class="fos-form-input" placeholder="Enter Last Name" />
+          <span class="fos-field-error" id="errContactLastName"></span>
+        </div>
+      </div>
+
+      <!-- Row 2: Email * & Phone No. (Primary) -->
+      <div class="form-grid-row two-cols">
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactEmail">Email <span class="req-star">*</span></label>
+          <input type="email" id="contactEmail" class="fos-form-input" placeholder="Enter Email" />
+          <span class="fos-field-error" id="errContactEmail"></span>
+        </div>
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactPhone">Phone No. (Primary)</label>
+          <input type="text" id="contactPhone" class="fos-form-input" placeholder="Enter Phone No." />
+          <span class="fos-field-error" id="errContactPhone"></span>
+        </div>
+      </div>
+
+      <!-- Row 3: Owner * & Source * -->
+      <div class="form-grid-row two-cols">
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactOwner">Owner <span class="req-star">*</span></label>
+          <div class="fos-select-wrapper">
+            <select id="contactOwner" class="fos-form-select">
+              <option value="Sakshi Barnwal" selected>Sakshi Barnwal</option>
+              <option value="Rashed Saad">Rashed Saad</option>
+              <option value="Adish Chaudhari">Adish Chaudhari</option>
+              <option value="Ahmed Raza">Ahmed Raza</option>
+              <option value="Oliver Smith">Oliver Smith</option>
+            </select>
+            <span class="select-chevron">▾</span>
+          </div>
+        </div>
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactSource">Source <span class="req-star">*</span></label>
+          <div class="fos-select-wrapper">
+            <select id="contactSource" class="fos-form-select">
+              <option value="Advertisement" selected>Advertisement</option>
+              <option value="Cold Call">Cold Call</option>
+              <option value="Website">Website</option>
+              <option value="Referral">Referral</option>
+              <option value="Trade Show">Trade Show</option>
+            </select>
+            <span class="select-chevron">▾</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Party * (Red highlighted box in Image 2: Lookup-with-Create) -->
+      <div class="form-grid-row single-col">
+        <div class="fos-form-group party-group-container" id="partyGroupWrapper">
+          <label class="fos-form-label" for="contactPartyInput">Party <span class="req-star">*</span></label>
+          <div class="party-lookup-input-box" id="partyLookupInputBox">
+            <input type="text" id="contactPartyInput" class="fos-form-input party-input" placeholder="Enter Party" autocomplete="off" />
+            <div class="party-status-indicator" id="partyPendingBadge" style="display: none;">
+              <span class="party-badge-pill">Pending New Lead</span>
+            </div>
+            <button type="button" id="btnPartyClear" class="party-input-clear-btn" title="Clear party" style="display: none;">&times;</button>
+            <span class="party-dropdown-caret" id="partyDropdownCaret">▾</span>
+          </div>
+
+          <!-- Inline informative message on defocus / unmatched value (Section 2 & AC-2.1) -->
+          <div class="party-inline-info-box" id="partyInlineInfoBox" style="display: none;">
+            <svg class="info-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span class="party-inline-info-text" id="partyInlineInfoText"></span>
+            <button type="button" class="party-edit-address-btn" id="btnEditCapturedAddress" style="display: none;" title="Edit Address for this Lead">Edit location</button>
+          </div>
+
+          <!-- Non-blocking offline / timeout search warning (AC-5.5) -->
+          <div class="party-search-warning" id="partySearchWarning" style="display: none;">
+            ⚠️ Unable to search existing parties right now. You may continue typing.
+          </div>
+
+          <!-- Party Field Error Message -->
+          <span class="fos-field-error" id="errContactParty"></span>
+
+          <!-- Autocomplete Lookup Dropdown Menu -->
+          <div class="party-dropdown-panel" id="partyDropdownPanel" style="display: none;">
+            <div class="party-dropdown-list" id="partyDropdownList">
+              <!-- Dynamically rendered options & "+ Add '{typed}' as a new Lead" -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Notes Field -->
+      <div class="form-grid-row single-col">
+        <div class="fos-form-group">
+          <label class="fos-form-label" for="contactNotes">Notes</label>
+          <textarea id="contactNotes" class="fos-form-textarea" placeholder="Enter Notes" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <footer class="drawer-footer">
+      <div class="drawer-footer-left"></div>
+      <div class="drawer-footer-right">
+        <button type="button" id="btnCancelContact" class="btn-drawer-cancel">Cancel</button>
+        <button type="button" id="btnSaveContact" class="btn-drawer-save">Save</button>
+      </div>
+    </footer>
+
+  </aside>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: Address Capture Popup (Section 3 & AC-2.1 to 3.5) -->
+  <!-- ========================================================= -->
+  <div id="addressCaptureBackdrop" class="address-capture-backdrop" style="display: none;"></div>
+
+  <div id="addressCaptureModal" class="address-capture-modal" role="dialog" aria-modal="true" aria-labelledby="addressCaptureTitle" style="display: none;">
+    <!-- Header -->
+    <div class="address-modal-header">
+      <div class="address-modal-header-titles">
+        <h3 id="addressCaptureTitle" class="address-modal-title">Address Details</h3>
+        <p class="address-modal-subtitle" id="addressModalSubtitle">
+          Please provide location details to create this company as a new Lead.
+        </p>
+      </div>
+      <button type="button" id="btnCloseAddressCapture" class="address-modal-close-btn" title="Close" aria-label="Close">&times;</button>
+    </div>
+
+    <!-- Body: EXACTLY 3 Fields -->
+    <div class="address-modal-body">
+      <!-- 1. Address Line 1 (Mandatory, 1-500 chars) -->
+      <div class="fos-form-group">
+        <label class="fos-form-label" for="addrCaptureAddress">Address <span class="req-star">*</span></label>
+        <textarea id="addrCaptureAddress" class="fos-form-textarea" placeholder="Enter Address Line 1" rows="2" maxlength="505"></textarea>
+        <span class="fos-field-error" id="errAddrCaptureAddress"></span>
+        <span class="field-char-counter" id="charCountAddress">0 / 500</span>
+      </div>
+
+      <!-- 2. City (Mandatory, 1-100 chars) -->
+      <div class="fos-form-group">
+        <label class="fos-form-label" for="addrCaptureCity">City <span class="req-star">*</span></label>
+        <input type="text" id="addrCaptureCity" class="fos-form-input" placeholder="Enter City" maxlength="110" />
+        <span class="fos-field-error" id="errAddrCaptureCity"></span>
+      </div>
+
+      <!-- 3. Country (Searchable Single-Select Dropdown from Country master) -->
+      <div class="fos-form-group">
+        <label class="fos-form-label" for="addrCaptureCountry">Country <span class="req-star">*</span></label>
+        <div class="fos-select-wrapper">
+          <select id="addrCaptureCountry" class="fos-form-select">
+            <option value="">--Select Country--</option>
+            <!-- Injected dynamically from COUNTRY_MASTER with ISO codes -->
+          </select>
+          <span class="select-chevron">▾</span>
+        </div>
+        <span class="fos-field-error" id="errAddrCaptureCountry"></span>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="address-modal-footer">
+      <button type="button" id="btnCancelAddressCapture" class="btn-addr-cancel">Cancel</button>
+      <button type="button" id="btnSaveAddressCapture" class="btn-addr-save">Save</button>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- FLOATING PROTOTYPE AC TEST CONTROLS (For Instant QA/Review) -->
+  <!-- ========================================================= -->
+  <div class="ac-demo-bar-wrap" id="acDemoBarWrap">
+    <div class="ac-demo-toggle" id="btnToggleAcDemo">
+      <span style="font-size: 14px;">🧪</span>
+      <span>AC Test Controls</span>
+      <span id="acDemoBarChevron" style="font-size: 10px; margin-left: 2px;">▲</span>
+    </div>
+
+    <div class="ac-demo-panel" id="acDemoPanel">
+      <div class="ac-demo-panel-header">
+        <span style="font-weight: 700; color: #1e293b;">Acceptance Criteria Quick-Tests</span>
+        <span style="font-size: 11px; color: #64748b;">Click any test to run interactive scenario</span>
+      </div>
+
+      <div class="ac-demo-actions-grid">
+        <button type="button" class="ac-test-btn" id="btnTestAcNewParty" title="Test AC-2.1, AC-2.3 & AC-4.1 (Type Orion Freight & open address capture)">
+          <span class="ac-badge">AC-2.1 / AC-4.1</span>
+          <span>New Lead Flow ("Orion Freight")</span>
+        </button>
+
+        <button type="button" class="ac-test-btn" id="btnTestAcExistingMatch" title="Test AC-5.1 & AC-2.4 (Exact/Whitespace match RGB Exports)">
+          <span class="ac-badge">AC-5.1</span>
+          <span>Existing Party ("  rgb exports  ")</span>
+        </button>
+
+        <button type="button" class="ac-test-btn" id="btnTestAcVendorExcluded" title="Test AC-5.2 (Vendor Acme Corp excluded from lookup)">
+          <span class="ac-badge">AC-5.2</span>
+          <span>Vendor Excluded ("Acme Corp")</span>
+        </button>
+
+        <button type="button" class="ac-test-btn" id="btnTestAcDuplicateEmail" title="Test AC-4.2 (Duplicate contact email fails without creating Lead)">
+          <span class="ac-badge">AC-4.2</span>
+          <span>Duplicate Email ("abcd@rajlog.com")</span>
+        </button>
+
+        <button type="button" class="ac-test-btn toggle" id="btnTogglePermLeadAdd" title="Toggle Leads Create permission on/off">
+          <span class="ac-badge">AC-5.6</span>
+          <span id="permLeadAddStatusText">Leads Create Perm: [ENABLED]</span>
+        </button>
+
+        <button type="button" class="ac-test-btn toggle" id="btnToggleNetworkTimeout" title="Toggle Party search failure/timeout simulation">
+          <span class="ac-badge">AC-5.5</span>
+          <span id="networkTimeoutStatusText">Party Search: [NORMAL]</span>
+        </button>
+
+        <button type="button" class="ac-test-btn reset" id="btnResetContactsData" title="Reset contacts and leads data back to initial screenshot state">
+          <span>🔄 Reset Prototype Data</span>
+        </button>
+      </div>
     </div>
   </div>
 
