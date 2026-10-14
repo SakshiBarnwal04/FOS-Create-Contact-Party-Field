@@ -55,80 +55,203 @@ const LEAD_STAGES = [
   'Lost'
 ];
 
-// Active Parties for Party Lookup (Single-Select Lookup with Create)
-const ACTIVE_PARTIES = [
+// =========================================================================
+// Master Parties Configuration & Branch-wise / Company-wise Data
+// =========================================================================
+let currentLoggedInBranch = 'Dubai';
+let partyVisibilityPreference = 'company'; // 'company' (Company Level) or 'branch' (Branch Level)
+let selectedPartyState = null; // { type: 'existing', party } or { type: 'new_lead', name }
+
+// Master Parties Dataset with Branches, Main Party Roles, Other Party Roles, and Status
+const INITIAL_MASTER_PARTIES = [
+  // --- Logged-in Branch (Dubai) Parties ---
   {
-    name: 'Rajshahi Logistics',
-    city: 'Rajshahi',
-    country: 'Bangladesh',
-    countryCode: 'BD',
-    role: 'Lead',
-    location: 'Rajshahi, Bangladesh'
+    name: 'Regal Enterprises',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: [],
+    location: 'Dubai, UAE'
   },
   {
-    name: 'ABC Freight LLP Updated',
-    city: 'New York',
-    country: 'United States',
-    countryCode: 'US',
-    role: 'Customer',
-    location: 'New York, United States'
+    name: 'Regal Logistics',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Lead',
+    otherPartyRoles: [],
+    location: 'Dubai, UAE'
   },
   {
     name: 'RGB Exports',
     city: 'Dubai',
     country: 'United Arab Emirates',
-    countryCode: 'AE',
-    role: 'Lead',
-    location: 'Dubai, United Arab Emirates'
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Lead',
+    otherPartyRoles: ['Customer'],
+    location: 'Dubai, UAE'
   },
   {
     name: 'Apex Global Logistics',
-    city: 'Singapore',
-    country: 'Singapore',
-    countryCode: 'SG',
-    role: 'Agent',
-    location: 'Singapore, Singapore'
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Agent',
+    otherPartyRoles: [],
+    location: 'Dubai, UAE'
   },
   {
     name: 'Maersk Line',
-    city: 'Copenhagen',
-    country: 'Denmark',
-    countryCode: 'DK',
-    role: 'Customer',
-    location: 'Copenhagen, Denmark'
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: ['Agent'],
+    location: 'Dubai, UAE'
+  },
+
+  // --- Other Branches Parties (Visible when Company Level visibility is chosen) ---
+  {
+    name: 'Regal Pacific Cargo',
+    city: 'Singapore',
+    country: 'Singapore',
+    branch: 'Singapore',
+    active: true,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: [],
+    location: 'Singapore, Singapore'
+  },
+  {
+    name: 'Rajshahi Logistics',
+    city: 'Rajshahi',
+    country: 'Bangladesh',
+    branch: 'Bangladesh',
+    active: true,
+    mainPartyRole: 'Lead',
+    otherPartyRoles: [],
+    location: 'Rajshahi, Bangladesh'
+  },
+  {
+    name: 'ABC Freight LLP',
+    city: 'New York',
+    country: 'United States',
+    branch: 'New York',
+    active: true,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: [],
+    location: 'New York, United States'
   },
   {
     name: 'Global Freightways',
     city: 'London',
     country: 'United Kingdom',
-    countryCode: 'GB',
-    role: 'Lead',
+    branch: 'London',
+    active: true,
+    mainPartyRole: 'Agent',
+    otherPartyRoles: ['Customer'],
     location: 'London, United Kingdom'
+  },
+  {
+    name: 'Pacific Ocean Lines',
+    city: 'Hong Kong',
+    country: 'Hong Kong',
+    branch: 'Hong Kong',
+    active: true,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: [],
+    location: 'Hong Kong'
+  },
+  {
+    name: 'EuroTrans Express',
+    city: 'Rotterdam',
+    country: 'Netherlands',
+    branch: 'Rotterdam',
+    active: true,
+    mainPartyRole: 'Lead',
+    otherPartyRoles: [],
+    location: 'Rotterdam, Netherlands'
+  },
+  {
+    name: 'Atlas Shipping Co',
+    city: 'Hamburg',
+    country: 'Germany',
+    branch: 'Hamburg',
+    active: true,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: ['Agent'],
+    location: 'Hamburg, Germany'
+  },
+
+  // --- Excluded Test Cases (Roles outside Lead/Agent/Customer or Inactive) ---
+  {
+    name: 'Acme Supplies',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Vendor',
+    otherPartyRoles: ['Supplier'],
+    location: 'Dubai, UAE'
+  },
+  {
+    name: 'TransWorld Customs',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: true,
+    mainPartyRole: 'Customs Broker',
+    otherPartyRoles: [],
+    location: 'Dubai, UAE'
+  },
+  {
+    name: 'Inactive Regal Corp',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    branch: 'Dubai',
+    active: false,
+    mainPartyRole: 'Customer',
+    otherPartyRoles: [],
+    location: 'Dubai, UAE'
+  },
+  {
+    name: 'Omni Logistics Inactive',
+    city: 'Singapore',
+    country: 'Singapore',
+    branch: 'Singapore',
+    active: false,
+    mainPartyRole: 'Lead',
+    otherPartyRoles: [],
+    location: 'Singapore, Singapore'
   }
 ];
 
-// AC-5.2: Vendor Parties (Roles outside Lead/Agent/Customer excluded from lookup)
-const VENDOR_PARTIES = [
-  {
-    name: 'Acme Corp',
-    city: 'Chicago',
-    country: 'United States',
-    countryCode: 'US',
-    role: 'Vendor'
-  }
-];
+let masterParties = JSON.parse(JSON.stringify(INITIAL_MASTER_PARTIES));
 
-// AC-5.3: Inactive Parties (Excluded from lookup)
-const INACTIVE_PARTIES = [
-  {
-    name: 'RGB Exports Inactive',
-    city: 'Mumbai',
-    country: 'India',
-    countryCode: 'IN',
-    role: 'Lead',
-    active: false
-  }
-];
+// Helper: Filter eligible backend parties based on System Preference & Roles
+function getBackendPartiesList() {
+  return masterParties.filter(party => {
+    // 1. Must be Active (Step 1 - item 4)
+    if (!party.active) return false;
+
+    // 2. Must have Lead, Agent, or Customer as Main Party Role OR Other Party Role (Step 1 - item 4)
+    const validRoles = ['Lead', 'Agent', 'Customer'];
+    const hasValidMainRole = validRoles.includes(party.mainPartyRole);
+    const hasValidOtherRole = party.otherPartyRoles && party.otherPartyRoles.some(r => validRoles.includes(r));
+    if (!hasValidMainRole && !hasValidOtherRole) return false;
+
+    // 3. Visibility check: Branch-wise vs Company-wise (Step 1 - items 2 & 3)
+    if (partyVisibilityPreference === 'branch') {
+      return party.branch.toLowerCase() === currentLoggedInBranch.toLowerCase();
+    }
+    return true; // Company-wise includes active parties across entire company
+  });
+}
 
 // Initial Contacts in Listing (Exact Match to Screenshot 1)
 const INITIAL_CONTACTS = [
@@ -2020,6 +2143,7 @@ function setupSidebarNavigation() {
   const subitemContacts = document.getElementById('subitemContacts');
   const subitemOpportunities = document.getElementById('subitemOpportunities');
   const subitemLeads = document.getElementById('subitemLeads');
+  const subitemSystemPreferences = document.getElementById('subitemSystemPreferences');
 
   if (subitemContacts) {
     subitemContacts.addEventListener('click', () => {
@@ -2038,6 +2162,26 @@ function setupSidebarNavigation() {
       showLeadsModule();
     });
   }
+
+  if (subitemSystemPreferences) {
+    subitemSystemPreferences.addEventListener('click', () => {
+      showSystemPreferencesModule();
+    });
+  }
+
+  const menuItemAdmin = document.getElementById('menuItemAdmin');
+  const submenuAdmin = document.getElementById('submenuAdmin');
+  const arrowAdmin = document.getElementById('arrowAdmin');
+  if (menuItemAdmin) {
+    menuItemAdmin.addEventListener('click', () => {
+      const isVisible = submenuAdmin && submenuAdmin.style.display === 'block';
+      if (submenuAdmin) submenuAdmin.style.display = isVisible ? 'none' : 'block';
+      if (arrowAdmin) arrowAdmin.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(90deg)';
+    });
+  }
+
+  // Initialize System Preferences interactive controls
+  initSystemPreferencesModule();
 }
 
 function showContactsModule() {
@@ -2045,6 +2189,7 @@ function showContactsModule() {
   const subitemContacts = document.getElementById('subitemContacts');
   const subitemOpportunities = document.getElementById('subitemOpportunities');
   const subitemLeads = document.getElementById('subitemLeads');
+  const subitemSystemPreferences = document.getElementById('subitemSystemPreferences');
   const pageTitle = document.getElementById('pageTitle');
   const contactsHeaderActions = document.getElementById('contactsHeaderActions');
   const oppHeaderActions = document.getElementById('oppHeaderActions');
@@ -2054,12 +2199,21 @@ function showContactsModule() {
   const oppTableView = document.getElementById('oppTableView');
   const leadsTableView = document.getElementById('leadsTableView');
   const contactsTableView = document.getElementById('contactsTableView');
+  const systemPreferencesView = document.getElementById('systemPreferencesView');
+  const pageHeaderRow = document.querySelector('.page-header-row');
+  const filterBar = document.querySelector('.filter-bar');
   const searchInput = document.getElementById('searchInput');
   const dateRangeText = document.getElementById('dateRangeText');
 
   if (subitemContacts) subitemContacts.classList.add('active');
   if (subitemOpportunities) subitemOpportunities.classList.remove('active');
   if (subitemLeads) subitemLeads.classList.remove('active');
+  if (subitemSystemPreferences) subitemSystemPreferences.classList.remove('active');
+
+  if (pageHeaderRow) pageHeaderRow.style.display = 'flex';
+  if (filterBar) filterBar.style.display = 'flex';
+  if (systemPreferencesView) systemPreferencesView.style.display = 'none';
+
   if (pageTitle) pageTitle.textContent = 'Contacts';
   if (contactsHeaderActions) contactsHeaderActions.style.display = 'flex';
   if (oppHeaderActions) oppHeaderActions.style.display = 'none';
@@ -2083,6 +2237,7 @@ function showOpportunitiesModule() {
   const subitemContacts = document.getElementById('subitemContacts');
   const subitemOpportunities = document.getElementById('subitemOpportunities');
   const subitemLeads = document.getElementById('subitemLeads');
+  const subitemSystemPreferences = document.getElementById('subitemSystemPreferences');
   const pageTitle = document.getElementById('pageTitle');
   const contactsHeaderActions = document.getElementById('contactsHeaderActions');
   const oppHeaderActions = document.getElementById('oppHeaderActions');
@@ -2090,12 +2245,21 @@ function showOpportunitiesModule() {
   const viewSwitcherGroup = document.getElementById('viewSwitcherGroup');
   const leadsTableView = document.getElementById('leadsTableView');
   const contactsTableView = document.getElementById('contactsTableView');
+  const systemPreferencesView = document.getElementById('systemPreferencesView');
+  const pageHeaderRow = document.querySelector('.page-header-row');
+  const filterBar = document.querySelector('.filter-bar');
   const searchInput = document.getElementById('searchInput');
   const dateRangeText = document.getElementById('dateRangeText');
 
   if (subitemContacts) subitemContacts.classList.remove('active');
   if (subitemOpportunities) subitemOpportunities.classList.add('active');
   if (subitemLeads) subitemLeads.classList.remove('active');
+  if (subitemSystemPreferences) subitemSystemPreferences.classList.remove('active');
+
+  if (pageHeaderRow) pageHeaderRow.style.display = 'flex';
+  if (filterBar) filterBar.style.display = 'flex';
+  if (systemPreferencesView) systemPreferencesView.style.display = 'none';
+
   if (pageTitle) pageTitle.textContent = 'Opportunities';
   if (contactsHeaderActions) contactsHeaderActions.style.display = 'none';
   if (oppHeaderActions) oppHeaderActions.style.display = 'flex';
@@ -2117,6 +2281,7 @@ function showLeadsModule() {
   const subitemContacts = document.getElementById('subitemContacts');
   const subitemOpportunities = document.getElementById('subitemOpportunities');
   const subitemLeads = document.getElementById('subitemLeads');
+  const subitemSystemPreferences = document.getElementById('subitemSystemPreferences');
   const pageTitle = document.getElementById('pageTitle');
   const contactsHeaderActions = document.getElementById('contactsHeaderActions');
   const oppHeaderActions = document.getElementById('oppHeaderActions');
@@ -2126,12 +2291,21 @@ function showLeadsModule() {
   const oppTableView = document.getElementById('oppTableView');
   const leadsTableView = document.getElementById('leadsTableView');
   const contactsTableView = document.getElementById('contactsTableView');
+  const systemPreferencesView = document.getElementById('systemPreferencesView');
+  const pageHeaderRow = document.querySelector('.page-header-row');
+  const filterBar = document.querySelector('.filter-bar');
   const searchInput = document.getElementById('searchInput');
   const dateRangeText = document.getElementById('dateRangeText');
 
   if (subitemContacts) subitemContacts.classList.remove('active');
   if (subitemOpportunities) subitemOpportunities.classList.remove('active');
   if (subitemLeads) subitemLeads.classList.add('active');
+  if (subitemSystemPreferences) subitemSystemPreferences.classList.remove('active');
+
+  if (pageHeaderRow) pageHeaderRow.style.display = 'flex';
+  if (filterBar) filterBar.style.display = 'flex';
+  if (systemPreferencesView) systemPreferencesView.style.display = 'none';
+
   if (pageTitle) pageTitle.textContent = 'Leads';
   if (contactsHeaderActions) contactsHeaderActions.style.display = 'none';
   if (oppHeaderActions) oppHeaderActions.style.display = 'none';
@@ -2145,6 +2319,197 @@ function showLeadsModule() {
   if (dateRangeText) dateRangeText.textContent = '9/11/2026 - 9/12/2026';
 
   renderLeadsTable();
+}
+
+// Show System Preferences Module (Admin → System Preferences matching screenshot)
+function showSystemPreferencesModule() {
+  activeModule = 'preferences';
+  const subitemContacts = document.getElementById('subitemContacts');
+  const subitemOpportunities = document.getElementById('subitemOpportunities');
+  const subitemLeads = document.getElementById('subitemLeads');
+  const subitemSystemPreferences = document.getElementById('subitemSystemPreferences');
+  const subitemDeptRoles = document.getElementById('subitemDeptRoles');
+  const submenuAdmin = document.getElementById('submenuAdmin');
+  const arrowAdmin = document.getElementById('arrowAdmin');
+
+  // Ensure Admin submenu is open
+  if (submenuAdmin) submenuAdmin.style.display = 'block';
+  if (arrowAdmin) arrowAdmin.style.transform = 'rotate(90deg)';
+
+  if (subitemContacts) subitemContacts.classList.remove('active');
+  if (subitemOpportunities) subitemOpportunities.classList.remove('active');
+  if (subitemLeads) subitemLeads.classList.remove('active');
+  if (subitemDeptRoles) subitemDeptRoles.classList.remove('active-dept-roles');
+  if (subitemSystemPreferences) subitemSystemPreferences.classList.add('active');
+
+  const pageHeaderRow = document.querySelector('.page-header-row');
+  const filterBar = document.querySelector('.filter-bar');
+  if (pageHeaderRow) pageHeaderRow.style.display = 'none';
+  if (filterBar) filterBar.style.display = 'none';
+
+  const pipelineView = document.getElementById('pipelineView');
+  const oppTableView = document.getElementById('oppTableView');
+  const leadsTableView = document.getElementById('leadsTableView');
+  const contactsTableView = document.getElementById('contactsTableView');
+  const systemPreferencesView = document.getElementById('systemPreferencesView');
+
+  if (pipelineView) pipelineView.style.display = 'none';
+  if (oppTableView) oppTableView.style.display = 'none';
+  if (leadsTableView) leadsTableView.style.display = 'none';
+  if (contactsTableView) contactsTableView.style.display = 'none';
+  if (systemPreferencesView) systemPreferencesView.style.display = 'block';
+
+  // Synchronize toggle UI state
+  updatePartyVisibilityToggleUI();
+}
+
+// Initialize System Preferences interactive controls
+function initSystemPreferencesModule() {
+  // Accordion 1: User Preferences
+  const headerUserPrefs = document.getElementById('headerUserPrefs');
+  const bodyUserPrefs = document.getElementById('bodyUserPrefs');
+  const chevronUserPrefs = document.getElementById('chevronUserPrefs');
+  if (headerUserPrefs && bodyUserPrefs) {
+    headerUserPrefs.addEventListener('click', () => {
+      const isExpanded = bodyUserPrefs.style.display !== 'none';
+      bodyUserPrefs.style.display = isExpanded ? 'none' : 'block';
+      headerUserPrefs.classList.toggle('expanded', !isExpanded);
+      if (chevronUserPrefs) chevronUserPrefs.textContent = isExpanded ? '▾' : '▴';
+    });
+  }
+
+  // Accordion 2: Branch Preferences
+  const headerBranchPrefs = document.getElementById('headerBranchPrefs');
+  const bodyBranchPrefs = document.getElementById('bodyBranchPrefs');
+  const chevronBranchPrefs = document.getElementById('chevronBranchPrefs');
+  if (headerBranchPrefs && bodyBranchPrefs) {
+    headerBranchPrefs.addEventListener('click', () => {
+      const isExpanded = bodyBranchPrefs.style.display !== 'none';
+      bodyBranchPrefs.style.display = isExpanded ? 'none' : 'block';
+      headerBranchPrefs.classList.toggle('expanded', !isExpanded);
+      if (chevronBranchPrefs) chevronBranchPrefs.textContent = isExpanded ? '▾' : '▴';
+    });
+  }
+
+  // Default Party Visibility Toggle (Step 1 - item 1)
+  const togglePartyVis = document.getElementById('togglePartyVisibility');
+  if (togglePartyVis) {
+    togglePartyVis.addEventListener('click', () => {
+      const newPref = partyVisibilityPreference === 'company' ? 'branch' : 'company';
+      setPartyVisibilityPreference(newPref, true);
+    });
+  }
+
+  // Generic dual toggle support for MFA, Payable List, Inland Transporter
+  ['toggleMfa', 'togglePayableList', 'toggleInlandTransporter'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', () => {
+      const currentVal = el.getAttribute('data-value');
+      const knob = el.querySelector('.syspref-toggle-knob');
+      const leftLabel = el.querySelector('.toggle-side-label.left');
+      const rightLabel = el.querySelector('.toggle-side-label.right');
+
+      if (currentVal === 'left' || knob.classList.contains('left')) {
+        knob.classList.remove('left');
+        knob.classList.add('right');
+        if (leftLabel) leftLabel.classList.remove('active');
+        if (rightLabel) rightLabel.classList.add('active');
+        el.setAttribute('data-value', 'right');
+      } else {
+        knob.classList.remove('right');
+        knob.classList.add('left');
+        if (leftLabel) leftLabel.classList.add('active');
+        if (rightLabel) rightLabel.classList.remove('active');
+        el.setAttribute('data-value', 'left');
+      }
+    });
+  });
+
+  // Save Preferences Button
+  const btnSaveSysPrefs = document.getElementById('btnSaveSysPrefs');
+  if (btnSaveSysPrefs) {
+    btnSaveSysPrefs.addEventListener('click', () => {
+      showToast(
+        'System Preferences Saved',
+        `General branch preferences updated. Default Party Visibility is set to ${partyVisibilityPreference === 'company' ? 'Company Level' : 'Branch Level'}.`,
+        'success',
+        4000
+      );
+    });
+  }
+
+  // Cancel Preferences Button
+  const btnCancelSysPrefs = document.getElementById('btnCancelSysPrefs');
+  if (btnCancelSysPrefs) {
+    btnCancelSysPrefs.addEventListener('click', () => {
+      showContactsModule();
+    });
+  }
+}
+
+// Update Party Visibility Preference & reflect in Drawer and Test Bar
+function setPartyVisibilityPreference(newVal, notify = false) {
+  partyVisibilityPreference = newVal;
+  updatePartyVisibilityToggleUI();
+  updateContactDrawerVisibilityUI();
+  updateDemoBarVisibilityUI();
+
+  if (notify) {
+    const modeName = newVal === 'company' ? 'Company Level (Company-wise)' : 'Branch Level (Branch-wise: Dubai)';
+    showToast(
+      'Party Visibility Updated',
+      `Default Party Visibility set to ${modeName}. The Add Contact drawer dropdown will search ${newVal === 'company' ? 'all active company parties' : 'active parties in Dubai branch only'}.`,
+      'info',
+      4500
+    );
+  }
+}
+
+function updatePartyVisibilityToggleUI() {
+  const toggle = document.getElementById('togglePartyVisibility');
+  const knob = document.getElementById('knobPartyVisibility');
+  const lblComp = document.getElementById('lblCompanyLevel');
+  const lblBranch = document.getElementById('lblBranchLevel');
+
+  if (!toggle) return;
+  toggle.setAttribute('data-value', partyVisibilityPreference);
+
+  if (partyVisibilityPreference === 'company') {
+    if (knob) {
+      knob.classList.remove('right');
+      knob.classList.add('left');
+    }
+    if (lblComp) lblComp.classList.add('active');
+    if (lblBranch) lblBranch.classList.remove('active');
+  } else {
+    if (knob) {
+      knob.classList.remove('left');
+      knob.classList.add('right');
+    }
+    if (lblComp) lblComp.classList.remove('active');
+    if (lblBranch) lblBranch.classList.add('active');
+  }
+}
+
+function updateContactDrawerVisibilityUI() {
+  const note = document.getElementById('partyVisibilityNote');
+  if (note) {
+    if (partyVisibilityPreference === 'company') {
+      note.textContent = 'Party Visibility: Company-wise';
+      note.title = 'Checked Admin → System Preferences: Company Level (includes all active company branches)';
+    } else {
+      note.textContent = 'Party Visibility: Branch-wise (Dubai)';
+      note.title = 'Checked Admin → System Preferences: Branch Level (restricted to logged-in user branch Dubai)';
+    }
+  }
+}
+
+function updateDemoBarVisibilityUI() {
+  const textEl = document.getElementById('demoVisibilityText');
+  if (textEl) {
+    textEl.textContent = `Party Visibility: [${partyVisibilityPreference === 'company' ? 'Company Level' : 'Branch Level'}]`;
+  }
 }
 
 // Switch Opportunity View (Requirement 2 & 10)
@@ -3115,13 +3480,16 @@ function filterLeadsTable(query) {
   });
 }
 
-// Open Contact Drawer (Image 2 Match)
+// Open Contact Drawer (Step 1 - item 1)
 function openContactDrawer() {
   const drawer = document.getElementById('contactDrawer');
   const backdrop = document.getElementById('contactDrawerBackdrop');
   if (!drawer || !backdrop) return;
 
   resetContactForm();
+
+  // Step 1 - item 1: System checks Admin → System Preferences → General Branch Preference → Party Visibility
+  updateContactDrawerVisibilityUI();
 
   drawer.classList.add('open');
   backdrop.classList.add('open');
@@ -3140,10 +3508,9 @@ function closeContactDrawer() {
   if (drawer) drawer.classList.remove('open');
   if (backdrop) backdrop.classList.remove('open');
 
-  // Clear uncommitted pending Lead data (AC-4.3)
-  pendingNewParty = null;
+  selectedPartyState = null;
   selectedExistingParty = null;
-  lastAddressCapturePartyName = '';
+  pendingNewParty = null;
   currentTypedPartyValue = '';
 }
 
@@ -3190,11 +3557,15 @@ function resetContactForm() {
   const partyWarn = document.getElementById('partySearchWarning');
   if (partyWarn) partyWarn.style.display = 'none';
 
+  const hintEl = document.getElementById('partySearchHint');
+  if (hintEl) hintEl.style.display = 'none';
+
   const partyDropdownPanel = document.getElementById('partyDropdownPanel');
   if (partyDropdownPanel) partyDropdownPanel.style.display = 'none';
 
-  pendingNewParty = null;
+  selectedPartyState = null;
   selectedExistingParty = null;
+  pendingNewParty = null;
   currentTypedPartyValue = '';
   lastAddressCapturePartyName = '';
 }
@@ -3209,67 +3580,76 @@ function hideAllContactFieldErrors() {
   });
 }
 
-
 // Clear Party Input handler
 function handleClearPartyInput() {
   const input = document.getElementById('contactPartyInput');
   const clearBtn = document.getElementById('btnPartyClear');
   const pendingBadge = document.getElementById('partyPendingBadge');
-  const inlineInfo = document.getElementById('partyInlineInfoBox');
   const dropdown = document.getElementById('partyDropdownPanel');
+  const hintEl = document.getElementById('partySearchHint');
 
   if (input) input.value = '';
   if (clearBtn) clearBtn.style.display = 'none';
   if (pendingBadge) pendingBadge.style.display = 'none';
-  if (inlineInfo) inlineInfo.style.display = 'none';
   if (dropdown) dropdown.style.display = 'none';
+  if (hintEl) hintEl.style.display = 'none';
 
-  // AC-5.4: Clearing the field completely discards captured address
-  pendingNewParty = null;
+  selectedPartyState = null;
   selectedExistingParty = null;
-  lastAddressCapturePartyName = '';
+  pendingNewParty = null;
   currentTypedPartyValue = '';
 
   if (input) input.focus();
 }
 
-// Party Input Event Handler (Search as you type & detecting unmatched values)
+// Party Input Event Handler (Step 2 - items 5 & 6)
 function handlePartyInput(e) {
   const val = e.target.value;
   currentTypedPartyValue = val;
+  const trimmed = val.trim();
 
   const clearBtn = document.getElementById('btnPartyClear');
   if (clearBtn) {
     clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
   }
 
-  // If user clears completely (AC-5.4)
-  if (!val.trim()) {
-    pendingNewParty = null;
+  const hintEl = document.getElementById('partySearchHint');
+  const panel = document.getElementById('partyDropdownPanel');
+  const pendingBadge = document.getElementById('partyPendingBadge');
+
+  if (!trimmed) {
+    selectedPartyState = null;
     selectedExistingParty = null;
-    lastAddressCapturePartyName = '';
-    const pendingBadge = document.getElementById('partyPendingBadge');
+    pendingNewParty = null;
     if (pendingBadge) pendingBadge.style.display = 'none';
-    const inlineInfo = document.getElementById('partyInlineInfoBox');
-    if (inlineInfo) inlineInfo.style.display = 'none';
-    const dropdown = document.getElementById('partyDropdownPanel');
-    if (dropdown) dropdown.style.display = 'none';
+    if (panel) panel.style.display = 'none';
+    if (hintEl) hintEl.style.display = 'none';
     return;
   }
 
+  // Step 2 - item 5: User must type a minimum of 3 characters to trigger a search
+  if (trimmed.length < 3) {
+    if (panel) panel.style.display = 'none';
+    if (hintEl) hintEl.style.display = 'block';
+    selectedPartyState = null;
+    if (pendingBadge) pendingBadge.style.display = 'none';
+    return;
+  }
+
+  if (hintEl) hintEl.style.display = 'none';
   renderPartyDropdown(val);
 }
 
 // Party Focus Event Handler
 function handlePartyFocus(e) {
-  if (e.target.value.trim()) {
-    renderPartyDropdown(e.target.value);
+  const val = e.target.value;
+  if (val && val.trim().length >= 3) {
+    renderPartyDropdown(val);
   }
 }
 
-// Party Blur / Defocus Event Handler (AC-2.1, AC-2.4, AC-2.5, AC-2.6, AC-5.1)
+// Party Blur Event Handler
 function handlePartyBlur() {
-  // Give dropdown item click handler priority
   setTimeout(() => {
     if (partyDropdownClicked) {
       partyDropdownClicked = false;
@@ -3277,56 +3657,26 @@ function handlePartyBlur() {
     }
 
     const input = document.getElementById('contactPartyInput');
-    const dropdown = document.getElementById('partyDropdownPanel');
-    if (dropdown) dropdown.style.display = 'none';
+    const panel = document.getElementById('partyDropdownPanel');
+    const hintEl = document.getElementById('partySearchHint');
+    if (panel) panel.style.display = 'none';
+    if (hintEl) hintEl.style.display = 'none';
 
     if (!input) return;
     const typed = input.value.trim();
     if (!typed) return;
 
-    // AC-5.1: Case/whitespace-trimmed match check against Active Parties
-    const exactMatch = ACTIVE_PARTIES.find(p => p.name.trim().toLowerCase() === typed.toLowerCase());
-    if (exactMatch) {
-      // Matched existing party: Link it, do NOT create new Lead, do NOT open popup (AC-2.4 & AC-5.1)
-      selectedExistingParty = exactMatch;
-      pendingNewParty = null;
-      lastAddressCapturePartyName = '';
-      input.value = exactMatch.name;
-
-      const pendingBadge = document.getElementById('partyPendingBadge');
-      if (pendingBadge) pendingBadge.style.display = 'none';
-      const inlineInfo = document.getElementById('partyInlineInfoBox');
-      if (inlineInfo) inlineInfo.style.display = 'none';
-      return;
-    }
-
-    // AC-2.5: If user already completed Address popup for this party and just corrected a typo
-    if (pendingNewParty && lastAddressCapturePartyName &&
-        (typed.toLowerCase().includes(lastAddressCapturePartyName.toLowerCase()) ||
-         lastAddressCapturePartyName.toLowerCase().includes(typed.toLowerCase()))) {
-      pendingNewParty.companyName = typed;
-      const pendingBadge = document.getElementById('partyPendingBadge');
-      if (pendingBadge) pendingBadge.style.display = 'block';
-      const inlineInfo = document.getElementById('partyInlineInfoBox');
-      const inlineText = document.getElementById('partyInlineInfoText');
-      const editBtn = document.getElementById('btnEditCapturedAddress');
-      if (inlineInfo && inlineText) {
-        inlineText.textContent = `"${typed}" has been added as pending lead`;
-        inlineInfo.style.display = 'flex';
+    // If user hasn't explicitly selected an option
+    if (!selectedPartyState && !pendingNewParty) {
+      const eligibleParties = getBackendPartiesList();
+      const exactMatch = eligibleParties.find(p => p.name.trim().toLowerCase() === typed.toLowerCase());
+      if (exactMatch) {
+        selectExistingPartyOption(exactMatch);
+      } else if (typed.length >= 3) {
+        currentTypedPartyValue = typed;
+        openAddressCaptureModal(typed);
       }
-      if (editBtn) {
-        editBtn.textContent = 'Edit location';
-        editBtn.style.display = 'inline-block';
-      }
-      return;
     }
-
-    // Unmatched Value Defocus -> Open Address Capture popup directly (inline notification appears after entering address)
-    const inlineInfo = document.getElementById('partyInlineInfoBox');
-    if (inlineInfo) inlineInfo.style.display = 'none';
-
-    // Open Address Capture Popup immediately!
-    openAddressCaptureModal(typed);
   }, 220);
 }
 
@@ -3334,52 +3684,32 @@ function handlePartyBlur() {
 function renderPartyDropdown(query) {
   const panel = document.getElementById('partyDropdownPanel');
   const listContainer = document.getElementById('partyDropdownList');
-  const warningEl = document.getElementById('partySearchWarning');
   if (!panel || !listContainer) return;
 
   const q = query.trim().toLowerCase();
+  const eligibleParties = getBackendPartiesList();
 
-  // AC-5.5: Simulated Search Timeout / Error
-  if (simulatePartySearchTimeout) {
-    if (warningEl) warningEl.style.display = 'block';
-    listContainer.innerHTML = `
-      <div class="party-add-lead-item" id="partyAddLeadOption">
-        <span class="party-add-icon-badge">+</span>
-        <span>Add "<strong>${escapeHtml(query.trim())}</strong>" as a new Lead</span>
-      </div>
-    `;
-    const addBtn = document.getElementById('partyAddLeadOption');
-    if (addBtn) {
-      addBtn.addEventListener('mousedown', () => {
-        partyDropdownClicked = true;
-        panel.style.display = 'none';
-        openAddressCaptureModal(query.trim());
-      });
-    }
-    panel.style.display = 'block';
-    return;
-  }
-
-  if (warningEl) warningEl.style.display = 'none';
-
-  // Filter Active Parties (Vendor & Inactive are excluded per AC-5.2 & AC-5.3)
-  const matches = ACTIVE_PARTIES.filter(p =>
+  // Filter matching parties by name or location
+  const matches = eligibleParties.filter(p =>
     p.name.toLowerCase().includes(q) ||
-    p.city.toLowerCase().includes(q) ||
-    p.country.toLowerCase().includes(q)
+    (p.city && p.city.toLowerCase().includes(q))
   );
-
-  const exactMatch = ACTIVE_PARTIES.find(p => p.name.trim().toLowerCase() === q);
 
   listContainer.innerHTML = '';
 
+  // Matching parties appear in dropdown with Main Party Role badge
   if (matches.length > 0) {
     matches.forEach(party => {
       const item = document.createElement('div');
       item.className = 'party-dropdown-item';
       item.innerHTML = `
-        <span class="party-item-title">${escapeHtml(party.name)} (${escapeHtml(party.city)}, ${escapeHtml(party.country)})</span>
-        <span class="party-item-role-tag">${escapeHtml(party.role)}</span>
+        <div class="party-item-left">
+          <span class="party-item-name">${escapeHtml(party.name)}</span>
+          ${partyVisibilityPreference === 'company' && party.branch && party.branch.toLowerCase() !== currentLoggedInBranch.toLowerCase() ? `<span class="party-item-branch">${escapeHtml(party.branch)}</span>` : ''}
+        </div>
+        <span class="party-role-badge role-${(party.mainPartyRole || 'customer').toLowerCase()}">
+          ${escapeHtml(party.mainPartyRole)}
+        </span>
       `;
       item.addEventListener('mousedown', () => {
         partyDropdownClicked = true;
@@ -3389,51 +3719,60 @@ function renderPartyDropdown(query) {
     });
   }
 
-  // If NOT an exact match, display "+ Add '{typed}' as a new Lead" (Requirement 2 & Section 2)
-  if (!exactMatch && query.trim().length > 0) {
-    const addItem = document.createElement('div');
-    addItem.className = 'party-add-lead-item';
-    addItem.id = 'partyAddLeadOption';
-    addItem.innerHTML = `
-      <span class="party-add-icon-badge">+</span>
-      <span>Add "<strong>${escapeHtml(query.trim())}</strong>" as a new Lead</span>
-    `;
-    addItem.addEventListener('mousedown', () => {
-      partyDropdownClicked = true;
-      panel.style.display = 'none';
-      const inlineInfo = document.getElementById('partyInlineInfoBox');
-      if (inlineInfo) inlineInfo.style.display = 'none';
-      openAddressCaptureModal(query.trim());
-    });
-    listContainer.appendChild(addItem);
-  }
+  // "+ Add '[Party Name]' as a new lead" dropdown option
+  const addItem = document.createElement('div');
+  addItem.className = 'party-add-lead-item';
+  addItem.id = 'partyAddLeadOption';
+  addItem.innerHTML = `
+    <span class="party-add-icon-badge">+</span>
+    <span>Add "<strong>${escapeHtml(query.trim())}</strong>" as a new lead</span>
+  `;
+  addItem.addEventListener('mousedown', () => {
+    partyDropdownClicked = true;
+    panel.style.display = 'none';
+    const inlineInfo = document.getElementById('partyInlineInfoBox');
+    if (inlineInfo) inlineInfo.style.display = 'none';
+    currentTypedPartyValue = query.trim();
+    openAddressCaptureModal(query.trim());
+  });
+  listContainer.appendChild(addItem);
 
-  panel.style.display = (matches.length > 0 || !exactMatch) ? 'block' : 'none';
+  panel.style.display = 'block';
 }
 
-// Select Existing Party Option (AC-2.4)
+// Select Existing Party Option
 function selectExistingPartyOption(party) {
   const input = document.getElementById('contactPartyInput');
   const panel = document.getElementById('partyDropdownPanel');
-  const inlineInfo = document.getElementById('partyInlineInfoBox');
   const pendingBadge = document.getElementById('partyPendingBadge');
+  const badgePill = document.getElementById('partyBadgePill');
   const clearBtn = document.getElementById('btnPartyClear');
   const partyErr = document.getElementById('errContactParty');
+  const hintEl = document.getElementById('partySearchHint');
+  const inlineInfo = document.getElementById('partyInlineInfoBox');
 
   if (input) input.value = party.name;
   if (panel) panel.style.display = 'none';
+  if (hintEl) hintEl.style.display = 'none';
   if (inlineInfo) inlineInfo.style.display = 'none';
-  if (pendingBadge) pendingBadge.style.display = 'none';
+  if (pendingBadge) pendingBadge.style.display = 'block';
+  if (badgePill) {
+    badgePill.textContent = party.mainPartyRole || 'Customer';
+    badgePill.className = `party-badge-pill role-${(party.mainPartyRole || 'customer').toLowerCase()}`;
+  }
   if (clearBtn) clearBtn.style.display = 'flex';
   if (partyErr) partyErr.classList.remove('visible');
 
+  selectedPartyState = {
+    type: 'existing',
+    party: party
+  };
   selectedExistingParty = party;
   pendingNewParty = null;
-  lastAddressCapturePartyName = '';
   currentTypedPartyValue = party.name;
 }
 
-// Open Address Capture Modal (Section 3: Modal over Contact Drawer)
+// Open Address Capture Modal (Pop-up with Address Line 1, City, Zip Code, Country)
 function openAddressCaptureModal(partyName) {
   const modal = document.getElementById('addressCaptureModal');
   const backdrop = document.getElementById('addressCaptureBackdrop');
@@ -3451,17 +3790,20 @@ function openAddressCaptureModal(partyName) {
 
   const addrInput = document.getElementById('addrCaptureAddress');
   const cityInput = document.getElementById('addrCaptureCity');
+  const zipInput = document.getElementById('addrCaptureZip');
   const countrySelect = document.getElementById('addrCaptureCountry');
   const counter = document.getElementById('charCountAddress');
 
   if (pendingNewParty) {
     if (addrInput) addrInput.value = pendingNewParty.address || '';
     if (cityInput) cityInput.value = pendingNewParty.city || '';
+    if (zipInput) zipInput.value = pendingNewParty.zipCode || '';
     if (countrySelect) countrySelect.value = pendingNewParty.countryCode || '';
     if (counter) counter.textContent = `${(pendingNewParty.address || '').length} / 500`;
   } else {
     if (addrInput) addrInput.value = '';
     if (cityInput) cityInput.value = '';
+    if (zipInput) zipInput.value = '';
     if (countrySelect) countrySelect.value = '';
     if (counter) counter.textContent = '0 / 500';
   }
@@ -3475,14 +3817,13 @@ function openAddressCaptureModal(partyName) {
   }, 150);
 }
 
-// Cancel Address Capture Popup (AC-2.2: Clears Party field to empty!)
+// Cancel Address Capture Popup (Clears Party field if half-finished)
 function handleCancelAddressCapture() {
   const modal = document.getElementById('addressCaptureModal');
   const backdrop = document.getElementById('addressCaptureBackdrop');
   if (modal) modal.style.display = 'none';
   if (backdrop) backdrop.style.display = 'none';
 
-  // AC-2.2: The Party field is cleared back to empty — a half-finished pending state is NOT allowed
   if (!pendingNewParty) {
     const partyInput = document.getElementById('contactPartyInput');
     const inlineInfo = document.getElementById('partyInlineInfoBox');
@@ -3496,11 +3837,12 @@ function handleCancelAddressCapture() {
 
     currentTypedPartyValue = '';
     lastAddressCapturePartyName = '';
+    selectedPartyState = null;
   }
 }
 
 function clearAddressModalErrors() {
-  ['errAddrCaptureAddress', 'errAddrCaptureCity', 'errAddrCaptureCountry'].forEach(id => {
+  ['errAddrCaptureAddress', 'errAddrCaptureCity', 'errAddrCaptureZip', 'errAddrCaptureCountry'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.classList.remove('visible');
@@ -3508,28 +3850,30 @@ function clearAddressModalErrors() {
     }
   });
 
-  ['addrCaptureAddress', 'addrCaptureCity', 'addrCaptureCountry'].forEach(id => {
+  ['addrCaptureAddress', 'addrCaptureCity', 'addrCaptureZip', 'addrCaptureCountry'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('has-error');
   });
 }
 
-// Save Address Capture Popup (AC-2.3 & AC-3.1 to AC-3.5)
+// Save Address Capture Popup (Validates Mandatory Fields: Address, City, Country. Zip Code is Optional)
 function handleSaveAddressCapture() {
   clearAddressModalErrors();
 
   const addrInput = document.getElementById('addrCaptureAddress');
   const cityInput = document.getElementById('addrCaptureCity');
+  const zipInput = document.getElementById('addrCaptureZip');
   const countrySelect = document.getElementById('addrCaptureCountry');
 
   const address = addrInput ? addrInput.value.trim() : '';
   const city = cityInput ? cityInput.value.trim() : '';
+  const zipCode = zipInput ? zipInput.value.trim() : '';
   const countryCode = countrySelect ? countrySelect.value : '';
   const countryName = COUNTRY_MASTER[countryCode] || '';
 
   let hasError = false;
 
-  // AC-3.1 & AC-3.4: Address validations
+  // 1. Address Line 1 validations (Mandatory)
   const errAddr = document.getElementById('errAddrCaptureAddress');
   if (!address) {
     if (errAddr) {
@@ -3547,7 +3891,7 @@ function handleSaveAddressCapture() {
     hasError = true;
   }
 
-  // AC-3.2 & AC-3.5: City validations
+  // 2. City validations (Mandatory)
   const errCity = document.getElementById('errAddrCaptureCity');
   if (!city) {
     if (errCity) {
@@ -3565,7 +3909,19 @@ function handleSaveAddressCapture() {
     hasError = true;
   }
 
-  // AC-3.3: Country validation
+  // 3. Zip Code validation (Optional - NOT mandatory)
+  // Only validate max length if the user entered something
+  const errZip = document.getElementById('errAddrCaptureZip');
+  if (zipCode && zipCode.length > 20) {
+    if (errZip) {
+      errZip.textContent = 'Zip Code cannot exceed 20 characters';
+      errZip.classList.add('visible');
+    }
+    if (zipInput) zipInput.classList.add('has-error');
+    hasError = true;
+  }
+
+  // 4. Country validation (Mandatory)
   const errCountry = document.getElementById('errAddrCaptureCountry');
   if (!countryCode) {
     if (errCountry) {
@@ -3586,10 +3942,17 @@ function handleSaveAddressCapture() {
     companyName: companyName,
     address: address,
     city: city,
+    zipCode: zipCode,
     countryCode: countryCode,
     countryName: countryName
   };
   lastAddressCapturePartyName = companyName;
+
+  selectedPartyState = {
+    type: 'new_lead',
+    name: companyName,
+    pendingParty: pendingNewParty
+  };
 
   // Close Popup
   const modal = document.getElementById('addressCaptureModal');
@@ -3597,37 +3960,36 @@ function handleSaveAddressCapture() {
   if (modal) modal.style.display = 'none';
   if (backdrop) backdrop.style.display = 'none';
 
-  // Update Contact Drawer UI (AC-2.3)
+  // Update Contact Drawer UI
   if (partyInput) partyInput.value = companyName;
 
   const pendingBadge = document.getElementById('partyPendingBadge');
+  const badgePill = document.getElementById('partyBadgePill');
   if (pendingBadge) pendingBadge.style.display = 'block';
+  if (badgePill) {
+    badgePill.textContent = 'Pending Lead';
+    badgePill.className = 'party-badge-pill role-lead';
+  }
+
+  const clearBtn = document.getElementById('btnPartyClear');
+  if (clearBtn) clearBtn.style.display = 'flex';
 
   const inlineInfo = document.getElementById('partyInlineInfoBox');
   const inlineText = document.getElementById('partyInlineInfoText');
   const editBtn = document.getElementById('btnEditCapturedAddress');
 
+  const locDisplay = [city, zipCode, countryName].filter(Boolean).join(', ');
   if (inlineInfo && inlineText) {
-    inlineText.textContent = `"${companyName}" has been added as pending lead`;
+    inlineText.textContent = `New Lead will be created: "${companyName}" (${locDisplay})`;
     inlineInfo.style.display = 'flex';
-  }
-  if (editBtn) {
-    editBtn.textContent = 'Edit location';
-    editBtn.style.display = 'inline-block';
+    if (editBtn) editBtn.style.display = 'inline-block';
   }
 
   const partyErr = document.getElementById('errContactParty');
   if (partyErr) partyErr.classList.remove('visible');
-
-  showToast(
-    'Location Captured',
-    `Address details attached to pending Lead "${companyName}".`,
-    'info',
-    3000
-  );
 }
 
-// Contact Form Save Handler (AC-4.1, AC-4.2, AC-5.6)
+// Contact Form Save Handler (Step 3a & 3b Commit Logic)
 function handleSaveContact() {
   hideAllContactFieldErrors();
 
@@ -3713,120 +4075,99 @@ function handleSaveContact() {
 
   // If party is typed but user hasn't completed Address Capture modal
   if (!selectedExistingParty && !pendingNewParty) {
-    // Defocus / open popup for this value
     openAddressCaptureModal(partyVal);
     return;
   }
 
-  // Check Company Name Length validation for new Party: 3-100 characters (Ticket Spec)
-  if (pendingNewParty) {
-    if (pendingNewParty.companyName.length < 3 || pendingNewParty.companyName.length > 100) {
-      const err = document.getElementById('errContactParty');
-      if (err) {
-        err.textContent = 'New Party Name must be between 3 and 100 characters';
-        err.classList.add('visible');
-      }
-      return;
-    }
-
-    // AC-5.6: Permission check — Leads -> Create permission required for implicit lead creation
-    if (!leadsCreatePermissionEnabled) {
-      if (permBanner) {
-        permBanner.style.display = 'flex';
-      }
-      showToast(
-        'Permission Denied',
-        'You do not have permission to create a new party/lead. Please contact your Admin or service@freightoscope.com for assistance.',
-        'error',
-        6500
-      );
-      // Scroll drawer to top so user sees the permission error banner
-      const drawerBody = document.querySelector('.contact-drawer-body');
-      if (drawerBody) drawerBody.scrollTop = 0;
-      return;
-    }
-  }
-
-  // AC-4.2: Duplicate Email Check (Atomicity Failure Test)
+  // Check duplicate email
   const isDuplicateEmail = contactsData.some(c => c.email.toLowerCase() === email.toLowerCase());
   if (isDuplicateEmail) {
-    if (dupBanner) {
-      dupBanner.style.display = 'flex';
-    }
+    if (dupBanner) dupBanner.style.display = 'flex';
     const errEmail = document.getElementById('errContactEmail');
     if (errEmail) {
       errEmail.textContent = 'Email already exists for another contact';
       errEmail.classList.add('visible');
     }
     if (emailInput) emailInput.classList.add('has-error');
-
-    showToast(
-      'Duplicate Email',
-      `A contact with email "${email}" already exists. Pending Lead was NOT created.`,
-      'error',
-      5500
-    );
-
-    // Scroll to top of drawer
+    showToast('Duplicate Email', `A contact with email "${email}" already exists.`, 'error', 4500);
     const drawerBody = document.querySelector('.contact-drawer-body');
     if (drawerBody) drawerBody.scrollTop = 0;
-
-    // AC-4.2: Pending Lead is NOT persisted; Party field retains pending state for retry
     return;
   }
 
   // =========================================================================
-  // AC-4.1: ATOMIC COMMIT ON SUCCESS (Both Lead and Contact created together)
+  // COMMIT: Save Contact & Lead (with Address Line 1, City, Zip Code, Country)
   // =========================================================================
+  let isNewLead = false;
   let finalPartyName = partyVal;
-  let finalPartyLocation = '';
+  let finalPartyLocation = `${currentLoggedInBranch}, UAE`;
 
   if (pendingNewParty) {
+    isNewLead = true;
     finalPartyName = pendingNewParty.companyName;
-    finalPartyLocation = `${pendingNewParty.city}, ${pendingNewParty.countryName}`;
+    const locParts = [pendingNewParty.city, pendingNewParty.zipCode, pendingNewParty.countryName].filter(Boolean);
+    finalPartyLocation = locParts.join(', ');
 
-    // AC-1.1: Lead Owner Email Id = currently logged-in user's email (sakshi.barnwal@freightoscope.com)
-    // AC-1.2 & AC-5.7: Lead Stage = "New" (or fallback first stage if "New" stage master missing)
-    // AC-1.3: Party Role = "Lead"
     const fallbackStage = LEAD_STAGES.includes('New') ? 'New' : LEAD_STAGES[0];
-
     const newLeadRecord = {
       leadId: `LEAD-${Math.floor(1000 + Math.random() * 9000)}`,
-      companyName: pendingNewParty.companyName,
+      companyName: finalPartyName,
       location: finalPartyLocation,
       stage: fallbackStage,
-      leadOwner: 'Sakshi Barnwal',
+      leadOwner: owner || 'Sakshi Barnwal',
       leadOwnerEmail: 'sakshi.barnwal@freightoscope.com',
       temperature: '❄️',
       contactName: `${firstName} ${lastName}`,
       contactPhone: phone || '--',
       partyRole: 'Lead',
+      mainPartyRole: 'Lead',
+      otherPartyRoles: [],
       addressLine1: pendingNewParty.address,
       city: pendingNewParty.city,
+      zipCode: pendingNewParty.zipCode || '',
       countryCode: pendingNewParty.countryCode,
+      branch: currentLoggedInBranch,
+      active: true,
       createdDate: new Date().toISOString()
     };
 
     // Commit new Lead to leads database
     leadsData.unshift(newLeadRecord);
 
-    // Also register in ACTIVE_PARTIES so subsequent searches immediately find it
-    ACTIVE_PARTIES.unshift({
-      name: pendingNewParty.companyName,
+    // Also register in masterParties so subsequent searches find it immediately
+    masterParties.unshift({
+      name: finalPartyName,
       city: pendingNewParty.city,
+      zipCode: pendingNewParty.zipCode || '',
       country: pendingNewParty.countryName,
-      countryCode: pendingNewParty.countryCode,
-      role: 'Lead',
+      branch: currentLoggedInBranch,
+      active: true,
+      mainPartyRole: 'Lead',
+      otherPartyRoles: [],
       location: finalPartyLocation
     });
 
     filterLeadsTable('');
+    if (typeof renderLeadsTable === 'function') renderLeadsTable();
   } else if (selectedExistingParty) {
+    isNewLead = false;
     finalPartyName = selectedExistingParty.name;
-    finalPartyLocation = `${selectedExistingParty.city}, ${selectedExistingParty.country}`;
+    finalPartyLocation = selectedExistingParty.location || `${selectedExistingParty.city || currentLoggedInBranch}, ${selectedExistingParty.country || 'UAE'}`;
+  } else {
+    // Fallback if matched
+    const eligibleParties = getBackendPartiesList();
+    const exactMatch = eligibleParties.find(p => p.name.trim().toLowerCase() === partyVal.toLowerCase());
+    if (exactMatch) {
+      isNewLead = false;
+      finalPartyName = exactMatch.name;
+      finalPartyLocation = exactMatch.location || `${exactMatch.city}, ${exactMatch.country}`;
+    } else {
+      isNewLead = true;
+      finalPartyName = partyVal;
+    }
   }
 
-  // Format Current Date and Time (e.g., 9/16/26, 6:30 PM)
+  // Format Current Date and Time
   const now = new Date();
   const dateStr = `${now.getMonth() + 1}/${now.getDate()}/${String(now.getFullYear()).slice(2)}, ${now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
 
@@ -3858,9 +4199,9 @@ function handleSaveContact() {
   // Success Notification
   showToast(
     'Contact Created Successfully',
-    pendingNewParty
-      ? `Contact "${newContactRecord.name}" created and new Lead "${finalPartyName}" auto-created in stage "New"!`
-      : `Contact "${newContactRecord.name}" created and linked to "${finalPartyName}".`,
+    isNewLead
+      ? `Contact "${newContactRecord.name}" created and new Lead "${finalPartyName}" saved in backend!`
+      : `Contact "${newContactRecord.name}" saved against existing party "${finalPartyName}".`,
     'success',
     5000
   );
@@ -3936,153 +4277,112 @@ function setupAcDemoControls() {
     });
   }
 
-  // Quick Test AC-2.1 & AC-4.1: New Lead Flow ("Orion Freight")
-  const btnTestNewParty = document.getElementById('btnTestAcNewParty');
-  if (btnTestNewParty) {
-    btnTestNewParty.addEventListener('click', () => {
+  // Quick Test 1: Toggle Party Visibility between Company Level and Branch Level (Step 1)
+  const btnToggleVisibility = document.getElementById('btnToggleVisibilityDemo');
+  if (btnToggleVisibility) {
+    btnToggleVisibility.addEventListener('click', () => {
+      const newPref = partyVisibilityPreference === 'company' ? 'branch' : 'company';
+      setPartyVisibilityPreference(newPref, true);
+    });
+  }
+
+  // Quick Test 2: Search "Rega" (Step 2 - items 5, 6, 7 & Step 3b - item 10)
+  const btnTestRega = document.getElementById('btnTestRega');
+  if (btnTestRega) {
+    btnTestRega.addEventListener('click', () => {
       showContactsModule();
       openContactDrawer();
 
-      // Pre-fill contact details
-      const first = document.getElementById('contactFirstName');
-      const last = document.getElementById('contactLastName');
-      const email = document.getElementById('contactEmail');
-      const party = document.getElementById('contactPartyInput');
-
-      if (first) first.value = 'David';
-      if (last) last.value = 'Lee';
-      if (email) email.value = 'david.lee@orionfreight.com';
-      if (party) {
-        party.value = 'Orion Freight';
-        currentTypedPartyValue = 'Orion Freight';
+      const input = document.getElementById('contactPartyInput');
+      if (input) {
+        input.value = 'Rega';
+        input.focus();
+        handlePartyInput({ target: input });
       }
 
-      // Trigger Address Capture Modal directly with Example-b values
-      openAddressCaptureModal('Orion Freight');
-
-      const addrInput = document.getElementById('addrCaptureAddress');
-      const cityInput = document.getElementById('addrCaptureCity');
-      const countrySelect = document.getElementById('addrCaptureCountry');
-
-      if (addrInput) addrInput.value = '12 Marina Blvd';
-      if (cityInput) cityInput.value = 'Singapore';
-      if (countrySelect) countrySelect.value = 'SG';
-
       showToast(
-        'AC-2.1 Scenario Active',
-        'Typed "Orion Freight" (unmatched). Address popup opened with Singapore location ready to Save.',
+        'Step 2: Search "Rega"',
+        `Typed "Rega" (>= 3 chars). Dropdown displays matched parties with role badges, plus "+ Add 'Rega' as a new lead". (Visibility: ${partyVisibilityPreference === 'company' ? 'Company Level' : 'Branch Level'})`,
         'info',
-        4500
+        5000
       );
     });
   }
 
-  // Quick Test AC-5.1: Existing Match ("  rgb exports  ")
-  const btnTestExistingMatch = document.getElementById('btnTestAcExistingMatch');
-  if (btnTestExistingMatch) {
-    btnTestExistingMatch.addEventListener('click', () => {
+  // Quick Test 3: Search "Regal Freight Solutions" -> Open Address Capture Modal with Zip Code
+  const btnTestRegalFS = document.getElementById('btnTestRegalFreightSolutions');
+  if (btnTestRegalFS) {
+    btnTestRegalFS.addEventListener('click', () => {
       showContactsModule();
       openContactDrawer();
 
-      const party = document.getElementById('contactPartyInput');
-      if (party) {
-        party.value = '  rgb exports  ';
-        currentTypedPartyValue = '  rgb exports  ';
-        party.focus();
-        setTimeout(() => {
-          party.blur();
-          showToast(
-            'AC-5.1 Verified',
-            'Defocused "  rgb exports  ": Matched existing "RGB Exports (Dubai, UAE)". Popup did NOT open.',
-            'success',
-            4500
-          );
-        }, 100);
-      }
-    });
-  }
+      const firstInput = document.getElementById('contactFirstName');
+      const lastInput = document.getElementById('contactLastName');
+      const emailInput = document.getElementById('contactEmail');
+      const input = document.getElementById('contactPartyInput');
 
-  // Quick Test AC-5.2: Vendor Role Excluded ("Acme Corp")
-  const btnTestVendor = document.getElementById('btnTestAcVendorExcluded');
-  if (btnTestVendor) {
-    btnTestVendor.addEventListener('click', () => {
-      showContactsModule();
-      openContactDrawer();
+      if (firstInput) firstInput.value = 'Regal';
+      if (lastInput) lastInput.value = 'Manager';
+      if (emailInput) emailInput.value = 'ops@regalfreight.com';
 
-      const party = document.getElementById('contactPartyInput');
-      if (party) {
-        party.value = 'Acme Corp';
-        currentTypedPartyValue = 'Acme Corp';
-        handlePartyBlur();
+      if (input) {
+        input.value = 'Regal Freight Solutions';
+        currentTypedPartyValue = 'Regal Freight Solutions';
+        openAddressCaptureModal('Regal Freight Solutions');
+
+        const addrInput = document.getElementById('addrCaptureAddress');
+        const cityInput = document.getElementById('addrCaptureCity');
+        const zipInput = document.getElementById('addrCaptureZip');
+        const countrySelect = document.getElementById('addrCaptureCountry');
+
+        if (addrInput) addrInput.value = '10 Marina Boulevard, Tower 2';
+        if (cityInput) cityInput.value = 'Singapore';
+        if (zipInput) zipInput.value = '018983';
+        if (countrySelect) countrySelect.value = 'SG';
+
         showToast(
-          'AC-5.2 Verified',
-          '"Acme Corp" exists as Vendor (excluded from lookup). Address capture opened to create new Lead!',
+          'Address Details Modal Active',
+          'Opened Address popup for "Regal Freight Solutions" with Address, City, optional Zip Code ("018983"), and Country ready to Save.',
           'info',
-          4500
+          5500
         );
       }
     });
   }
 
-  // Quick Test AC-4.2: Duplicate Email Validation
-  const btnTestDupEmail = document.getElementById('btnTestAcDuplicateEmail');
-  if (btnTestDupEmail) {
-    btnTestDupEmail.addEventListener('click', () => {
+  // Quick Test 4: Exact Match Edge Case ("Regal Enterprises")
+  const btnTestExact = document.getElementById('btnTestExactMatch');
+  if (btnTestExact) {
+    btnTestExact.addEventListener('click', () => {
       showContactsModule();
       openContactDrawer();
 
-      const first = document.getElementById('contactFirstName');
-      const last = document.getElementById('contactLastName');
-      const email = document.getElementById('contactEmail');
-      const party = document.getElementById('contactPartyInput');
-
-      if (first) first.value = 'Test';
-      if (last) last.value = 'User';
-      if (email) email.value = 'abcd@rajlog.com'; // Existing email row 1
-
-      // Set pending party
-      pendingNewParty = {
-        companyName: 'Apex Quantum Log',
-        address: '100 Ocean Way',
-        city: 'Dubai',
-        countryCode: 'AE',
-        countryName: 'United Arab Emirates'
-      };
-      if (party) party.value = 'Apex Quantum Log';
-      const badge = document.getElementById('partyPendingBadge');
-      if (badge) badge.style.display = 'block';
-
-      setTimeout(() => {
-        handleSaveContact();
-      }, 200);
-    });
-  }
-
-  // Toggle AC-5.6 Leads Create Permission
-  const btnTogglePerm = document.getElementById('btnTogglePermLeadAdd');
-  if (btnTogglePerm) {
-    btnTogglePerm.addEventListener('click', () => {
-      toggleLeadsCreatePermission(true);
-    });
-  }
-
-  // Toggle AC-5.5 Network Timeout Simulation
-  const btnToggleTimeout = document.getElementById('btnToggleNetworkTimeout');
-  const timeoutStatusText = document.getElementById('networkTimeoutStatusText');
-  if (btnToggleTimeout) {
-    btnToggleTimeout.addEventListener('click', () => {
-      simulatePartySearchTimeout = !simulatePartySearchTimeout;
-      if (timeoutStatusText) {
-        timeoutStatusText.textContent = `Party Search: [${simulatePartySearchTimeout ? 'TIMEOUT SIMULATED' : 'NORMAL'}]`;
+      const input = document.getElementById('contactPartyInput');
+      if (input) {
+        input.value = 'Regal Enterprises';
+        input.focus();
+        handlePartyInput({ target: input });
       }
-      btnToggleTimeout.classList.toggle('off', simulatePartySearchTimeout);
+
       showToast(
-        simulatePartySearchTimeout ? 'Search Timeout Enabled' : 'Search Normal',
-        simulatePartySearchTimeout
-          ? 'AC-5.5: Non-blocking "Unable to search existing parties right now" warning will show when typing.'
-          : 'Normal search connectivity restored.',
-        simulatePartySearchTimeout ? 'warning' : 'success',
-        3500
+        'Edge Case: Exact Match',
+        'Typed exact existing party "Regal Enterprises". Notice that "+ Add \'Regal Enterprises\' as a new lead" is STILL displayed below it per explicit specification.',
+        'info',
+        5500
+      );
+    });
+  }
+
+  // Quick Test 5: Open Admin → System Preferences Screen
+  const btnOpenSys = document.getElementById('btnOpenSysPrefs');
+  if (btnOpenSys) {
+    btnOpenSys.addEventListener('click', () => {
+      showSystemPreferencesModule();
+      showToast(
+        'Admin → System Preferences',
+        'Opened General Branch Preferences view matching screenshot. You can toggle Default Party Visibility here.',
+        'info',
+        4000
       );
     });
   }
@@ -4092,13 +4392,13 @@ function setupAcDemoControls() {
   if (btnReset) {
     btnReset.addEventListener('click', () => {
       contactsData = JSON.parse(JSON.stringify(INITIAL_CONTACTS));
+      masterParties = JSON.parse(JSON.stringify(INITIAL_MASTER_PARTIES));
+      setPartyVisibilityPreference('company', false);
       leadsCreatePermissionEnabled = true;
       simulatePartySearchTimeout = false;
-      updateLeadsCreatePermissionUI();
-      if (timeoutStatusText) timeoutStatusText.textContent = 'Party Search: [NORMAL]';
-      if (btnToggleTimeout) btnToggleTimeout.classList.remove('off');
       renderContactsTable();
-      showToast('Prototype Reset', 'Contacts data and permissions reset to initial screenshot state.', 'info', 2500);
+      showContactsModule();
+      showToast('Prototype Reset', 'Contacts, master parties, and preferences reset to default state.', 'info', 3000);
     });
   }
 }
